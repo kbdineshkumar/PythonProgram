@@ -22,6 +22,8 @@ for i in lst:
         res.append(i)
 
 print('results: ',res)
+lst=list(range(0,21,3))
+print('results: ',res)
 
 # 28. Write a for or while loop to print the cube of 4, result should be 4*4*4=64 (initiate some variable outside the loop with 4 and loop through 3 times to achieve the result)
 x=4
@@ -49,6 +51,8 @@ for i in sal_lst:
 print('bonus applied sal: ',sal_bonus_lst)
 print('bonus applied sal with > 11000: ',sal_bonus_lst1)
 
+# 30. Write a do while loop to print “Inceptez technologies” n number of times as per the input you get from the user.
+# Minimum it has to be printed at least one time regardless of the user input.
 x=int(input('enter the no: '))
 i=0
 while True:

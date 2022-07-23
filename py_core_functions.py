@@ -148,7 +148,8 @@ def print_cmp_name(x):
             break
         i+=1
 
-x=int(input('enter the no: '))
+#x=int(input('enter the no: '))
+x=1
 print_cmp_name(x)
 
 # 31. lst1=[[10,20],[30,40,50],[60,70,80]], calculate the sum of all number, calculate the min value and the max value of all the elements in the lst1.
@@ -215,7 +216,9 @@ print(ab)
 ab=calc(5,3,'all')
 print(ab)
 
-# 37. Create a method to accept a string like “inceptez technologies” and return the following values in multiple result types (capitalize, upper case, length of the string, number of words, ends with “s” or not, replace ‘e’ with ‘a’) for eg. the result should be like this.. (Inceptez Technologies, INCEPTEZ TECHNOLOGIES, 21, 2, True,incaptaz tachnologias)
+# 37. Create a method to accept a string like “inceptez technologies” and return the following values in
+# multiple result types (capitalize, upper case, length of the string, number of words, ends with “s” or not, replace ‘e’ with ‘a’)
+# for eg. the result should be like this.. (Inceptez Technologies, INCEPTEZ TECHNOLOGIES, 21, 2, True,incaptaz tachnologias)
 def str_manipulate(st):
     if (isinstance(st, str)):
         return (st.title(),st.upper(),st.__len__(),len(st.split()),st.endswith('s'),st.replace('e','a'))
@@ -228,7 +231,11 @@ print(x)
 st1='hello how are you'
 print(st1.title())
 
-
+# 41. Apply exception handler code in the above usecase number 35 to achieve the followings
+# a.  If the calculator function is called with either the first or second argument as non integer values then raise Exception and call the calculator function
+# with the type casted value
+# for eg. calc("10",20, "add") in the except block of the exception handler we have to call the same function as calc(int("10"),20, "add") and
+# return the result to the calling environment.
 def calc(x,y,operation='add'):
     try:
         if operation == 'add' or operation == '':
@@ -271,74 +278,124 @@ print(ab)
 ab=calc(5,3,'all')
 print(ab)
 
+# 38. Create a regular function called promo that accepts 3 arguments where arg1 is amount, arg2 is the offer_percent and arg3 is the offer_cap_limit.
+# Calculate if amount*offer_percent < offer_cap_limit then return amount-(amount*offer_percent) else return the amount-offer_cap_limit
 
-print('*** purchase amt exercise ***')
-'''
-def offer_calc(x):
-    off_per=50/100
-    #off_max=100
-    discounted_price=x()*off_per
-    def max_check(off_max=100):
-        if discounted_price == '':
-            print('no discount will be applied')
-            dp_u=x
-        elif discounted_price >= off_max:
-            dp_u=x-off_max
-        elif discounted_price < off_max:
-            dp_u=x-discounted_price
-        return dp_u
-    return max_check
+# a. Create the function with the above logic and call with all 3 params passed for eg: promo(1000,.10,200)
+def promo(amt, off_per, off_cap_lmt):
+    off_amt=amt*off_per
+    if off_amt < off_cap_lmt:
+        return amt-off_amt
+    else:
+        return amt-off_cap_lmt
 
-def ip():
-    x=int(input('enter the purchase amount: '))
-    return x
+val=promo(1000,.10,200)
+#val=promo(300,.50,100)
+print(val)
 
-#x=offer_calc(ip)
-#resu=x()
-'''
-#p=300
-def off(pamount,per,mx):
-    #per=0.5
-    #mx=100
-    def disc_cal(x,y):
-        dis=x*y
-        return dis
-    def disc(fn,x,y):
-        return fn(x,y)
-    dis=disc(disc_cal,per,pamount)
-    #print('discounted price:',dis)
-    def max_check():
-        if dis >= mx:
-            print(f'max offer applied is {mx} only')
-            n=pamount-mx;
-        elif dis < mx:
-            print(dis,'offer applied')
-            n=pamount-dis
-        return n
-    return max_check
+# b. Create the function with the above logic (with default parameter) and call with first 2 params passed for eg: promo(1000,.10)
+def promo(amt, off_per, off_cap_lmt=200):
+    off_amt=amt*off_per
+    if off_amt < off_cap_lmt:
+        return amt-off_amt
+    else:
+        return amt-off_cap_lmt
+
+val=promo(1000,.10)
+#val=promo(300,.50)
+print(val)
+
+# c. Create the function with the above logic (with arbitrary arguments) and call with all 3 params passed for eg: promo(1000,.10,200)
+def promo(*args):
+    (amt,off_per,off_cap_lmt)=(args[0],args[1],args[2])
+    off_amt=amt*off_per
+    if off_amt < off_cap_lmt:
+        return amt-off_amt
+    else:
+        return amt-off_cap_lmt
+
+val=promo(1000,.10,200)
+#val=promo(300,.50,100)
+print(val)
+
+# d. Create the function with the above logic (with keyword arbitrary arguments) and call with all 3 params passed for eg: promo(offer_percent=.10,offer_cap_limit=200,amount=1000)
+def promo(**args):
+    (amt,off_per,off_cap_lmt)=(args['amount'],args['offer_percent'],args['offer_cap_limit'])
+    off_amt=amt*off_per
+    if off_amt < off_cap_lmt:
+        return amt-off_amt
+    else:
+        return amt-off_cap_lmt
+
+val=promo(offer_percent=.10,offer_cap_limit=200,amount=1000)
+#val=promo(offer_percent=.50,amount=300,offer_cap_limit=100)
+print(val)
+
+# 39. Create a lambda function with the logic of lam=amount-(amount*offer_percent) and create a regular function with the above same logic with 4 arguments
+# to Calculate if amount*offer_percent < offer_cap_limit then return lam(amount,offer_percent) else return the amount-offer_cap_limit.
+# Eg. Call this function like promo(1000,.10,200,lam) to ensure this is a higher order function
+def promo(amt, off_per, off_cap_lmt,lam):
+    off_amt=amt*off_per
+    if off_amt < off_cap_lmt:
+        #return amt-off_amt
+        return lam(amt,off_per)
+    else:
+        return amt-off_cap_lmt
+
+lam=lambda amt,off_per:amt-(amt*off_per)
+val=promo(1000,.10,200,lam)
+#val=promo(300,.50,100,lam)
+print(val)
+
+# 40. Create a lambda function as like the regular function created in step 38.
+# a. Create the function with the above logic and call with all 3 params passed for eg: promo(1000,.10,200)
+print("method 1")
+promo=lambda amt, off_per, off_cap_lmt:amt-(amt*off_per) if (amt*off_per<off_cap_lmt) else amt-off_cap_lmt
+val=promo(1000,.10,200)
+#val=promo(300,.50)
+print(val)
+
+print("method 2")
+promo=lambda amt, off_per, off_cap_lmt:(lambda: amt-off_cap_lmt, lambda: amt-(amt*off_per))[amt*off_per<off_cap_lmt]()
+val=promo(1000,.10,200)
+#val=promo(300,.50,100)
+print(val)
+
+# b. Create the function with the above logic (with default parameter) and call with first 2 params passed for eg: promo(1000,.10)
+promo=lambda amt, off_per, off_cap_lmt=50:amt-(amt*off_per) if (amt*off_per<off_cap_lmt) else amt-off_cap_lmt
+val=promo(1000,.10)
+#val=promo(300,.50)
+print(val)
+
+# c. Create the function with the above logic (with arbitrary arguments) and call with all 3 params passed for eg: promo(1000,.10,200)
+promo=lambda *args:args[0]-(args[0]*args[1]) if (args[0]*args[1]<args[2]) else args[0]-args[2]
+val=promo(1000,.10,200)
+#val=promo(300,.50)
+print(val)
+
+# d. Create the function with the above logic (with keyword arbitrary arguments) and call with all 3 params passed for eg: promo(offer_percent=.10,offer_cap_limit=200,amount=1000)
+promo=lambda **args:args['amount']-(args['amount']*args['offer_percent']) if (args['amount']*args['offer_percent']<args['offer_cap_limit']) else args['amount']-args['offer_cap_limit']
+val=promo(offer_percent=.10,offer_cap_limit=200,amount=1000)
+#val=promo(offer_percent=.50,amount=300,offer_cap_limit=100)
+print(val)
 
 
-mx=100
-i=int(input('enter the purchase amount: '))
-print('By default 50% offer available and max discount price is 100')
-m=str(input('do you want modify the discount % and max discount price ? yes or no: '))
-if m=='yes' or m=='y':
-    dper=int(input('enter the discount %: '))
-    dprice= int(input('enter the max discount price: '))
-    x=off(i,dper/100,dprice)
-    print(x())
-elif m=='no' or m=='n':
-    x = off(i,per=0.5,mx=100)
-    print(x())
+# 42. Write an exception handler code to raise exception if the 2nd argument passed is a negative value in the function created in step 38
+# a. Create the function with the above logic and call with all 3 params passed for eg: promo(1000,.10,200)
+def promo(amt, off_per, off_cap_lmt):
+    try:
+        if off_per < 0:
+            raise Exception
+        else:
+            off_amt=amt*off_per
+            if off_amt < off_cap_lmt:
+                return amt-off_amt
+            else:
+                return amt-off_cap_lmt
+    except Exception as msg:
+        print("offer percent shouldn't be in negative", msg)
+        return 0
 
-'''
-def disc_calc(o,m):
-    r=o*m
-    return r
-
-def disc(fnname,x,y):
-    return fnname(x,y)
-
-print(disc(disc_calc,0.5,100))
-
-'''
+val=promo(1000,-.10,200)
+#val=promo(300,.50,100)
+print(val)
